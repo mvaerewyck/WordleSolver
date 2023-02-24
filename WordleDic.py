@@ -6,16 +6,16 @@
 
 # import statements
 
-import pyDictionary as pyDic 
+#import pyDictionary as pyDic 
 
 # Construct Method
 class WordleDic:
     def _init_():
         # Get 5-letter words
-        wordList = pyDic.pyDictionary()
+ #       wordList = pyDic.pyDictionary()
          
 
-
+        pass
     def wordsThatRemain():
         # use feedback to reduce the overall dictionary to 
         # make a list of words make a suggestion
