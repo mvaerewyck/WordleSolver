@@ -49,3 +49,6 @@ class wordleSolve:
         # the list
         
         pass
+
+
+    #this is to show julie how this works!!
