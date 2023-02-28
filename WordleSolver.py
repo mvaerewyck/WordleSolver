@@ -17,14 +17,24 @@ try:
 except:
     print("Failure in retrieving list")
 
-print ('world list obtained')
-print("You guessed first: {}".format(userGuess))
+print ('-- World list obtained --')
 
 while True:
 
+    # Get user's guess
     while True:
-        #wordleReturn_input = input("Please input the response from Wordle (using yg.) :")
-        wordleReturn_input = '.yy..'
+        userGuess = input("Please input user's guess:")
+        #userGuess = 'slate' #used for testing first go
+
+        if len(userGuess) == 5:
+            break
+        else:
+            print("Error, incorrect format - g for green, y for yellow, . for black:")
+
+    # Get feedback from wordle (from User)
+    while True:
+        wordleReturn_input = input("Please input the response from Wordle (using yg.) :")
+        # wordleReturn_input = '.g.yy' #used for testing
         wordleReturn = re.search(return_pattern,wordleReturn_input)
 
         if len(wordleReturn_input)>5 or wordleReturn == None:
@@ -35,9 +45,10 @@ while True:
     if wordleReturn_input == 'ggggg':
         print('Another succesful solve!')
         break
-    elif len(Wordle.wordlist) < 1:
+    elif len(Wordle.wordlist) == []:
         print("Error! No more potential words remain!")
         break
     else:
          Wordle.wordleFeedback(userGuess, wordleReturn_input)
-         Wordle.wordsThatRemain()
+         print("Number of words remain: {}".format(len(Wordle.wordlist)))
+         print(Wordle.wordlist)

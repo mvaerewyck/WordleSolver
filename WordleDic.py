@@ -10,7 +10,7 @@ import re, requests
 # Construct Method
 class wordleSolve():
 
-    g_list = ['\\w' for _ in range(5)] # initialize as wild cards for purposes of re
+    g_list = ['?' for _ in range(5)] # initialize as wild cards for purposes of re
     y_list = [] # 2D List for yellows and their positions
     x_list = [] # list of letters not in word
 
@@ -59,36 +59,27 @@ class wordleSolve():
             else:
                 self.x_list.append(userGuess[i])
 
-    def wordsThatRemain(self):
-    ## use feedback to reduce the overall dictionary to
-    ## make a list of words make a suggestion
+        # The following will build the regular expression to go through the word list and:
+        # skip if the 'g' is not a ?
+        # any yellows detected should be added to a 'not in that spot'
+        # any blacks in the word should be removed
 
-        # since wordleFeeback updated where the greens are, we're good
-
-        # y_list should update the regex to include that letter but NOT in
-        #   the position where it was discovered
-
-        #remove any instance of a word that has
         X_list = ''.join(self.x_list)
+        regexStr = "" # clear the regex string
 
-        regexStr0 = r'([^{}{}][{}])'.format(X_list,''.join([y[1] for y in self.y_list if y[0] == 0]),self.g_list[0])+'{1}'
-        regexStr1 = "([^{}{}][{}])".format(X_list,''.join([y[1] for y in self.y_list if y[0] == 1]),self.g_list[1])+'{1}'
-        regexStr2 = "([^{}{}][{}])".format(X_list,''.join([y[1] for y in self.y_list if y[0] == 2]),self.g_list[2])+'{1}'
-        regexStr3 = "([^{}{}][{}])".format(X_list,''.join([y[1] for y in self.y_list if y[0] == 3]),self.g_list[3])+'{1}'
-        regexStr4 = "([^{}{}][{}])".format(X_list,''.join([y[1] for y in self.y_list if y[0] == 4]),self.g_list[4])+'{1}'
-
-        regexStr = regexStr0 + regexStr1 + regexStr2 + regexStr3 + regexStr4
+        for i, ch in enumerate(self.g_list):
+            if ch != '?':
+                regexStr +="[{}]".format(ch)
+            else:
+                regexStr +="[^{}{}]".format(X_list,''.join([y[1] for y in self.y_list if y[0] == i]))
 
         # search wordlist with new constraints
         pattern = re.compile(regexStr) # if I change this to any of the indv. letter positions it works
-        #pattern_list = pattern.findall(self.wordlist, re.MULTILINE)
         pattern_list = list(filter(lambda x: re.match(pattern, x), self.wordlist))
 
-        ''' don't think I need to iterate through this...
-        
-        newWordlist = []
-        for result in pattern_list:
-            newWordlist.append(result)
-        '''
+        ## NEED TO FIGURE OUT THIS PART
+        YRegexString = '|'.join([y[1] for y in self.y_list])
+        Ypattern = re.compile(YRegexString)
+        yellow_list = list(filter(lambda x: re.match(Ypattern, x), pattern_list))
 
-        self.wordlist = pattern_list
+        self.wordlist = yellow_list
