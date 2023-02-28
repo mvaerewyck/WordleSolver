@@ -23,7 +23,8 @@ print("You guessed first: {}".format(userGuess))
 while True:
 
     while True:
-        wordleReturn_input = input("Please input the response from Wordle (using yg.) :")
+        #wordleReturn_input = input("Please input the response from Wordle (using yg.) :")
+        wordleReturn_input = '.yy..'
         wordleReturn = re.search(return_pattern,wordleReturn_input)
 
         if len(wordleReturn_input)>5 or wordleReturn == None:
