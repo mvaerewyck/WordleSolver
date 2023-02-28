@@ -18,9 +18,10 @@ except:
     print("Failure in retrieving list")
 
 print ('world list obtained')
+print("You guessed first: {}".format(userGuess))
 
 while True:
-    print("You guessed first: ", userGuess)
+
     while True:
         wordleReturn_input = input("Please input the response from Wordle (using yg.) :")
         wordleReturn = re.search(return_pattern,wordleReturn_input)
@@ -37,4 +38,5 @@ while True:
         print("Error! No more potential words remain!")
         break
     else:
-         userGuess = Wordle.wordleFeedback(userGuess, wordleReturn_input)
+         Wordle.wordleFeedback(userGuess, wordleReturn_input)
+         Wordle.wordsThatRemain()

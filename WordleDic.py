@@ -56,27 +56,22 @@ class wordleSolve():
         # find the locations of green, yellow, and black letters
         # save letters in lists
 
-        for i in [0,1,2,3,4]:
-            if wordleReturn_input[i] == 'g':
-                g_pos = g_pos + [i]
-                self.g_list.append(wordleReturn_input[i])
-            elif wordleReturn_input[i] == 'y':
-                y_pos = y_pos + [i]#.append(i)
-                self.y_list.append(wordleReturn_input[i])
+        for i, ch in enumerate(wordleReturn_input):
+            if ch == 'g':
+                g_pos.append(i)
+                self.g_list.append(ch)
+            elif ch == 'y':
+                y_pos.append(i)
+                self.y_list.append(ch)
             else:
-                x_pos = x_pos + [i]
-                self.x_list.append(wordleReturn_input[i])
+                x_pos.append(i)
+                self.x_list.append(ch)
 
-        print("g is at locations: {}".format(g_pos))
-        print("y is at locations: {}".format(y_pos))
-        print(". is at locations: {}".format(x_pos))
+## Debugging test point
+#        print("g is at locations: {}".format(g_pos))
+#        print("y is at locations: {}".format(y_pos))
+#        print(". is at locations: {}".format(x_pos))
 
-
-
-#        for letter in wordleReturn_input:
-#            pattern = re.compile('')
-
-    
     def wordsThatRemain(self):
     ## use feedback to reduce the overall dictionary to
     ## make a list of words make a suggestion
