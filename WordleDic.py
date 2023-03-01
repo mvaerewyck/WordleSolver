@@ -27,11 +27,10 @@ class wordleSolve():
         # https://en.wikipedia.org/wiki/Lists_of_English_words#External_links
         wordlist_webpage = requests.get('https://meaningpedia.com/5-letter-words?show=all')
 
-        # get list of words by grabbing regex captures of response
-        # compile regex
+        # get list of words by finding words inside html headers
         pattern = re.compile(r'<span itemprop="name">(\w+)</span>')
 
-        # find all matches
+        # find all matches by scraping the webpage
         pattern_list = pattern.findall(wordlist_webpage.text)
 
         for result in pattern_list:
@@ -39,18 +38,11 @@ class wordleSolve():
 
         self.wordlist = wordlist
 
-    #############################################################
-    ## uses feedback from the webpage via regular expression to
-    # limit what words remain
-    #############################################################
-
     def wordleFeedback(self, userGuess, wordleReturn_input):
-
-        # use feedback from wordle to remove potential words from
-        # the list
-
-        # find the locations of green, yellow, and black letters
-        # save letters in lists
+        #############################################################
+        # uses feedback from the webpage via regular expression to
+        # limit what words remain
+        #############################################################
 
         for i, ch in enumerate(wordleReturn_input):
             if ch == 'g':
@@ -61,12 +53,12 @@ class wordleSolve():
                 self.x_list.append(userGuess[i])
 
         # The following will build the regular expression to go through the word list and:
-        # skip if the 'g' is not a ?
+        # ensure a 'g' letter is placed in that spot
         # any yellows detected should be added to a 'not in that spot'
         # any blacks in the word should be removed
 
-        X_list = ''.join(self.x_list)
-        regexStr = "" # clear the regex string
+        X_list = ''.join(self.x_list) # make a list of the letters not in the word
+        regexStr = ""                 # clear the regex string
 
         for i, ch in enumerate(self.g_list):
             if ch != '?':
@@ -78,16 +70,18 @@ class wordleSolve():
         pattern = re.compile(regexStr) #
         pattern_list = list(filter(lambda x: re.match(pattern, x), self.wordlist))
 
-        ## NEED TO FIGURE OUT THIS PART
-        y_chars = [y[1] for y in self.y_list]
+        ## I feel like there should be a more 'pythonic' way to do this::
+        y_chars = [y[1] for y in self.y_list] #make a list of known yellow chars
         yellow_list = []
 
-        check = len(y_chars)
-        yellow_list = word for word in pattern_list if all(y_chars in word)
-                # yellow_list.append(word)
-
-        #
-        # if all(word in pattern_list for word in y_chars):
-        #     yellow_list.append(word)
+        # Go through the list of words, ensure that each word in the list contains at least the
+        # yellow letters in the word
+        for word in pattern_list:
+            i=0
+            for ch in y_chars:
+                if ch in word:
+                    i += 1
+                if i == len(y_chars): # if the word contains all the yellow letters, append
+                    yellow_list.append(word)
 
         self.wordlist = yellow_list

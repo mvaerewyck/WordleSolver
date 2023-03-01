@@ -23,21 +23,19 @@ while True:
 
     # Get user's guess
     while True:
-        userGuess = input("Please input user's guess:")
-        #userGuess = 'slate' #used for testing first go
-
-        if len(userGuess) == 5:
+        userGuess = input("\n\nPlease input user's guess:")
+        if len(userGuess) == 5: # could do more testing here for proper form
             break
         else:
-            print("Error, incorrect format - g for green, y for yellow, . for black:")
+            print("Error! Guess can only be a 5-letter word")
 
-    # Get feedback from wordle (from User)
+    # Get feedback from wordle (via User)
     while True:
-        return_pattern = re.compile('[yg.]{5}')  # set up the wordle return feedback limits
         wordleReturn_input = input("Please input the response from Wordle (using yg.) :")
-        # wordleReturn_input = '.g.yy' #used for testing
+        return_pattern = re.compile('[yg.]{5}')  # set up the wordle return feedback limits
         wordleReturn = re.search(return_pattern,wordleReturn_input)
 
+        # ensure that the length of the feedback and the type of feedback is correct
         if len(wordleReturn_input)>5 or wordleReturn == None:
             print("Error, incorrect format - g for green, y for yellow, . for black:")
         else:
@@ -46,10 +44,19 @@ while True:
     if wordleReturn_input == 'ggggg':
         print('Another succesful solve!')
         break
-    elif len(Wordle.wordlist) == []:
-        print("Error! No more potential words remain!")
+    elif len(Wordle.wordlist) == 1:
+        print("The correct answer is {}".format(Wordle.wordlist))
+        break
+    elif Wordle.wordlist == []:
+        print("Error! No more words to guess. Try again.")
         break
     else:
          Wordle.wordleFeedback(userGuess, wordleReturn_input)
          print("Number of words remain: {}".format(len(Wordle.wordlist)))
-         print(Wordle.wordlist)
+         counter = 0
+         for word in Wordle.wordlist:
+            print(word, end=', ')
+            counter += 1
+            if counter == 15:
+                print("")
+                counter = 0
