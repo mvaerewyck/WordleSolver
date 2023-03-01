@@ -1,14 +1,12 @@
 # constructor for WordleSolver.py
 # This code will:
 #
-# find the 5-letter words from pydictionary and store them
-# deal with interface from WordleSolver and cut dworlown the stored list
+# find the 5-letter words from a scraped list on the web and store them
+
 
 # import statements
 import re, requests
-import numpy as np
 
-# Construct Method
 class wordleSolve():
 
     g_list = ['?' for _ in range(5)] # initialize as wild cards for purposes of re

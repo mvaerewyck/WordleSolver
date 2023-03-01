@@ -6,8 +6,6 @@ import re
 from WordleDic import wordleSolve
 
 # handles user input and reports back and forth to WordleDic.py
-userGuess = "slate"     # user's next guess, initialized as "slate"
-
 Wordle = wordleSolve()
 
 try:
