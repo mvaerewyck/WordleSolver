@@ -7,7 +7,7 @@ from WordleDic import wordleSolve
 
 # handles user input and reports back and forth to WordleDic.py
 userGuess = "slate"     # user's next guess, initialized as "slate"
-return_pattern = re.compile('[yg.]{5}') #set up the wordle return feedback limits
+
 Wordle = wordleSolve()
 
 try:
@@ -33,6 +33,7 @@ while True:
 
     # Get feedback from wordle (from User)
     while True:
+        return_pattern = re.compile('[yg.]{5}')  # set up the wordle return feedback limits
         wordleReturn_input = input("Please input the response from Wordle (using yg.) :")
         # wordleReturn_input = '.g.yy' #used for testing
         wordleReturn = re.search(return_pattern,wordleReturn_input)

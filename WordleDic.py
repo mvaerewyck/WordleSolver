@@ -6,6 +6,7 @@
 
 # import statements
 import re, requests
+import numpy as np
 
 # Construct Method
 class wordleSolve():
@@ -73,13 +74,20 @@ class wordleSolve():
             else:
                 regexStr +="[^{}{}]".format(X_list,''.join([y[1] for y in self.y_list if y[0] == i]))
 
-        # search wordlist with new constraints
-        pattern = re.compile(regexStr) # if I change this to any of the indv. letter positions it works
+        # search wordlist with new constraints (not black, yellow not in those positions, green in those positions
+        pattern = re.compile(regexStr) #
         pattern_list = list(filter(lambda x: re.match(pattern, x), self.wordlist))
 
         ## NEED TO FIGURE OUT THIS PART
-        YRegexString = '|'.join([y[1] for y in self.y_list])
-        Ypattern = re.compile(YRegexString)
-        yellow_list = list(filter(lambda x: re.match(Ypattern, x), pattern_list))
+        y_chars = [y[1] for y in self.y_list]
+        yellow_list = []
+
+        check = len(y_chars)
+        yellow_list = word for word in pattern_list if all(y_chars in word)
+                # yellow_list.append(word)
+
+        #
+        # if all(word in pattern_list for word in y_chars):
+        #     yellow_list.append(word)
 
         self.wordlist = yellow_list
