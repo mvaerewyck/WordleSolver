@@ -74,12 +74,15 @@ class wordleSolve():
 
         # Go through the list of words, ensure that each word in the list contains at least the
         # yellow letters in the word
-        for word in pattern_list:
-            i=0
-            for ch in y_chars:
-                if ch in word:
-                    i += 1
-                if i == len(y_chars): # if the word contains all the yellow letters, append
-                    yellow_list.append(word)
+        if len(y_chars) != 0:
+            for word in pattern_list:
+                i=0
+                for ch in y_chars:
+                    if ch in word:
+                        i += 1
+                    if i == len(y_chars): # if the word contains all the yellow letters, append
+                        yellow_list.append(word)
+        else:
+            yellow_list = pattern_list
 
         self.wordlist = yellow_list
