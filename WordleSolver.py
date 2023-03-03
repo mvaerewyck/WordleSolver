@@ -39,17 +39,19 @@ while True:
         else:
             break
 
+    Wordle.wordleFeedback(userGuess, wordleReturn_input)
+    wordsRemaining = len(Wordle.wordlist)
+
     if wordleReturn_input == 'ggggg':
         print('Another succesful solve!')
         break
-    elif len(Wordle.wordlist) == 1:
-        print("The correct answer is {}".format(Wordle.wordlist))
+    elif wordsRemaining == 1:
+        print("The correct answer is : {}".format(*Wordle.wordlist))
         break
-    elif Wordle.wordlist == []:
+    elif wordsRemaining == 0:
         print("Error! No more words to guess. Try again.")
         break
     else:
-         Wordle.wordleFeedback(userGuess, wordleReturn_input)
          print("Number of words remain: {}".format(len(Wordle.wordlist)))
          counter = 0
          for word in Wordle.wordlist:
